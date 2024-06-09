@@ -1,0 +1,35 @@
+.website-info-section {
+    display: flex;
+    position: relative;
+}
+
+.info-div {
+  margin-left: 100px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  justify-content: flex-start;
+}
+
+.info figure {
+  height: 10%;
+  text-align: center;
+  margin: 0;
+}
+
+.info img {
+    margin: 0;
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+}
+
+.info figcaption {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.info p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

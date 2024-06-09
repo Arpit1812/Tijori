@@ -1,0 +1,38 @@
+.document-types {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 2;
+ margin:10px;
+  background-color: #cfdede;
+  border-radius: 5%;
+  flex: 0 0 30%;
+}
+
+.document-types figure {
+  height: 10%;
+}
+
+.document-types img {
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.document-types img:hover {
+  transform: translateY(-10px);
+}
+
+.document-types figcaption {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.link {
+  color: inherit; /* Use the color of the parent element */
+  text-decoration: none; /* Remove underline */
+}

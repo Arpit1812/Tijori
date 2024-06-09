@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="education.css" />
+    <title>Document Manager</title>
+  </head>
+
+  <body>
+    <a id="top"></a>
+    <div class="blur-overlay hide"></div>
+    <main class="main">
+      <header>
+        <nav id="navbar">
+          <ul>
+            <li><a href="index.html#top">Home</a></li>
+            <li id="servicesNav">
+              Services
+              <div class="dropdown-content" id="dropdownDiv">
+                <a href="index2.html">Password Manager</a>
+                <a href="index3.html">Document Manager</a>
+              </div>
+            </li>
+            <li><a href="index.html#footer-links">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <a href="index3.html"
+        ><button id="goBackButton" class="arrow-button"></button
+      ></a>
+      <div id="identities">
+        <div class="identity-types" id="aadhar">
+          <figure>
+          <a href="docUpload.html"><img src="aadharLogo.jpg" alt="Aadhar Card" /></a>
+            <figcaption>Aadhar Card</figcaption>
+          </figure>
+        </div>
+        <div class="identity-types" id="pan">
+          <figure>
+            <a href="docUpload.html"><img src="panLogo.png" alt="Pan Card" /></a>
+            <figcaption>Pan Card</figcaption>
+          </figure>
+        </div>
+        <div class="identity-types" id="road">
+          <figure>
+            <a href="road.html"><img src="govtLogo.jpg" alt="Road Certificates" /></a>
+            <figcaption>Road Certificates</figcaption>
+          </figure>
+        </div>
+      </div>
+    </main>
+    <!--main section ends here-->
+
+    <footer>
+      <!--footer-->
+      <p>A simple initiative by 2 Computer Science Students</p>
+      <div class="footer-links" id="footer-links">
+        <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+      </div>
+    </footer>
+
+    <script src="index3.js" type="module"></script>
+  </body>
+</html>

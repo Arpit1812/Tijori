@@ -1,0 +1,33 @@
+.documentForm {
+  overflow-x: hidden;
+  height: 66.3vh;
+}
+
+.newDoc {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 2;
+  margin-left: 130px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+.heading {
+  margin-top: 2%;
+}
+
+.heading h3 {
+  text-align: center;
+}
+
+.addDoc {
+  text-align: right;
+  margin-right: 20%;
+}
+
+.addDoc button {
+  border: none;
+  background-color: transparent;
+}

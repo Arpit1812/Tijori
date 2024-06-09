@@ -1,0 +1,49 @@
+.contact {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+}
+
+.contact .leftSide {
+  height: 100%;
+  flex: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.contact .rightSide {
+  height: 100%;
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact .rightSide h1 {
+  color: #333;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: 10;
+  font-size: 50px;
+  text-align: center;
+  position: absolute;
+  top: 20%;
+  left: 66%;
+}
+
+.contact p {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.contact button {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  border: none;
+  background-color: rgb(129, 177, 169);
+}
+
+.contact button:hover {
+  background-color: #333;
+}

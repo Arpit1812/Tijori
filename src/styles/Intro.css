@@ -1,0 +1,59 @@
+.headerContainer {
+  height: 600px;
+  background-repeat: none;
+  background-position: center;
+  background-image: url("../assets/locker2.gif");
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: top;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerContainer h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 90px;
+  margin-bottom: 0;
+  letter-spacing: 30px;
+  position: absolute;
+  top: 35%;
+  left: 17%;
+}
+
+.headerContainer h2 {
+  color: rgb(223, 216, 14);
+  margin-top: 2px;
+  font-size: 35px;
+  letter-spacing: 2px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: 48%;
+  left: 17%;
+}
+
+.headerContainer button {
+  background-color: linen;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  justify-content: center;
+  height: 50px;
+  width: 180px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  position: relative;
+ top:700%;
+ left:17%;
+ margin-right:1%;
+}
+
+.headerContainer button:hover {
+  background-color: rgb(129, 177, 169);
+  color: linen;
+  cursor: pointer;
+  transition: 0.3s ease-in;
+}

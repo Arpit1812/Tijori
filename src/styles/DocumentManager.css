@@ -1,0 +1,11 @@
+.documents {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 66.3vh;
+  width: 100%;
+}
+

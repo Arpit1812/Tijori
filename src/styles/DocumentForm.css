@@ -1,0 +1,52 @@
+.uploadDocs {
+  position: relative;
+  top: 20%;
+  left: 3%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.doc {
+  position: relative;
+  background-color: #333;
+  margin-bottom: 0.5%;
+  align-self: left;
+  width: fit-content;
+  height: fit-content;
+  margin-top: 1%;
+  margin-left: 10%;
+  border-radius: 20px;
+}
+
+#uploadForm {
+  position: inherit;
+  display: flex;
+  flex-direction: column;
+  margin: 50px 50px 70px 50px;
+  align-items: flex-start;
+  justify-content: center;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.deleteDoc,
+.submitDoc {
+  border-radius: 5px;
+  border-style: none;
+  cursor: pointer;
+  margin-top: 5%;
+}
+
+.docTitle {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: small;
+  border-width: 0px 0px 1px 0px;
+  background-color: #333;
+  color: white;
+  border-color: white;
+  border-radius: 0;
+  margin-bottom: 8%;
+  margin-top: 0;
+}
