@@ -25,7 +25,7 @@ function PasswordForm({ id, onDelete }) {
     console.log("Sending data to server:", formData);
 
     //send data to server
-    fetch("https://jsonplaceholder.typicode.com/posts", {
+    fetch("", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {
