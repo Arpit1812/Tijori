@@ -24,7 +24,7 @@ const LogInForm = () => {
     console.log("Sending data to server:", logInData);
 
     //send data to server
-    fetch("https://jsonplaceholder.typicode.com/posts", {
+    fetch("", {
       method: "POST",
       body: JSON.stringify(logInData),
       headers: {
