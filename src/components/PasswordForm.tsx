@@ -3,6 +3,7 @@ import "../styles/PasswordForm.css";
 
 function PasswordForm({ id, onDelete }) {
   const [formData, setFormData] = useState({
+    id: id,
     title: "",
     username: "",
     password: "",
@@ -17,6 +18,10 @@ function PasswordForm({ id, onDelete }) {
     }));
   };
 
+  const [isSaved, setIsSaved] = useState(false);
+  const [isEdit, setIsEdit] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = (event) => {
     console.log("handle submit start");
 
@@ -25,7 +30,7 @@ function PasswordForm({ id, onDelete }) {
     console.log("Sending data to server:", formData);
 
     //send data to server
-    fetch("", {
+    fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {
@@ -41,23 +46,21 @@ function PasswordForm({ id, onDelete }) {
       .then((data) => {
         console.log("Received response from server:", data);
         console.log("Data saved successfully:", data);
+        setError(null); // Reset error state on successful operation
+        console.log("no error. data sent and saved");
+        setIsSaved(true);
+        setIsEdit(false);
       })
       .catch((error) => {
-        console.error("Error saving data:", error);
+        console.error("Error saving data:", error.message);
+        setError(
+          "An error occurred while saving data. Please try again later."
+        );
       });
   };
 
-  const [isSaved, setIsSaved] = useState(false);
-  const [isEdit, setIsEdit] = useState(true);
-
   const handleDelete = () => {
     onDelete(id);
-  };
-
-  const handleSave = () => {
-    console.log("save start");
-    setIsSaved(true);
-    setIsEdit(false);
   };
 
   const handleEdit = () => {
@@ -79,7 +82,6 @@ function PasswordForm({ id, onDelete }) {
             </label>
             <input
               type="text"
-              id="title"
               name="title"
               value={formData.title}
               onChange={handleChange}
@@ -93,7 +95,6 @@ function PasswordForm({ id, onDelete }) {
             <label htmlFor="username">USERNAME</label>
             <input
               type="text"
-              id="username"
               name="username"
               value={formData.username}
               onChange={handleChange}
@@ -107,7 +108,6 @@ function PasswordForm({ id, onDelete }) {
             <label htmlFor="password">PASSWORD</label>
             <input
               type="text"
-              id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -132,9 +132,12 @@ function PasswordForm({ id, onDelete }) {
                 </button>
               </div>
             ) : (
-              <button className="button1" type="submit" onClick={handleSave}>
-                Save
-              </button>
+              <div>
+                <button className="button1" type="submit">
+                  Save
+                </button>
+                {error && <div className="error">{error}</div>}
+              </div>
             )}
           </form>
         </div>
