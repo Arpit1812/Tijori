@@ -7,6 +7,7 @@ function PasswordManager() {
   const [forms, setForms] = useState([{ id: 1 }]);
 
   const handleAddForm = () => {
+    console.log("form length", forms.length);
     const newForm = {
       id: forms.length + 1,
     };
@@ -15,6 +16,7 @@ function PasswordManager() {
 
   const handleDeleteForm = (id) => {
     let updatedForms = forms.filter((form) => form.id !== id);
+    console.log("id of deleted form", id);
     if (updatedForms.length === 0) {
       // If all forms are deleted, add a new form
       updatedForms = [{ id: forms.length + 1 }];
