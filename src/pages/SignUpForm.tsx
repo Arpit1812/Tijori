@@ -18,12 +18,14 @@ const SignUpForm = () => {
     }));
   };
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submission starting");
     console.log("sending data to server:", signUpData);
 
-    fetch("", {
+    fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
       body: JSON.stringify(signUpData),
       headers: {
@@ -39,9 +41,14 @@ const SignUpForm = () => {
       .then((data) => {
         console.log("Received response from server:", data);
         console.log("Data saved successfully:", data);
+        console.log("no error. data sent and saved");
+        setError(null);
       })
       .catch((error) => {
-        console.error("error saving data:", error);
+        console.error("Error saving data:", error.message);
+        setError(
+          "An error occurred while saving data. Please try again later."
+        );
       });
   };
 
@@ -121,6 +128,7 @@ const SignUpForm = () => {
           </div>
         </form>
         <div className="redirect">
+          {error && <p className="error">{error}</p>}
           <p>
             {" "}
             Already a member? <br />{" "}
