@@ -65,7 +65,7 @@
 }
 
 .redirect {
-  margin-top: -4%;
+  margin-top: -9%;
   text-align: center;
   color: #7a7878;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -79,4 +79,14 @@
 
 .redirect-link:hover {
   text-decoration: underline;
+}
+
+.redirect .error {
+  position: absolute;
+  top: -50%;
+  text-wrap: nowrap;
+  color: #7a7878;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: small;
+  margin-left:38%;
 }
