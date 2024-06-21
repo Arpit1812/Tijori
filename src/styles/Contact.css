@@ -47,3 +47,16 @@
 .contact button:hover {
   background-color: #333;
 }
+
+.confirmation .confirmation-message {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(129, 177, 169);
+  position: relative;
+  top: 30%;
+}
+
+.empty-message {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(129, 177, 169);
+  position: relative;
+}
