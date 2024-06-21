@@ -1,10 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../assets/contact.png";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import "../styles/Contact.css";
 
 function Contact() {
+  const [feedback, setFeedback] = useState("");
+
+  //handling chnage in the feedback option
+  const handleFeedbackChange = (event) => {
+    console.log("handling feedback");
+    setFeedback(event.target.value);
+  };
+
+  //submitting feedback to backend
+  const handleFeedbackSubmit = (event) => {
+    event.preventDefault();
+    console.log("submission starting");
+    console.log("sending data to server:", feedback);
+
+    fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      body: JSON.stringify({ feedback }),
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("network response not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Received response from server:", data);
+        console.log("Data saved successfully:", data);
+        console.log("no error. data sent and saved");
+        alert("feedback submitted successfully!");
+        setFeedback("");
+      })
+      .catch((error) => {
+        console.error("Error saving data:", error.message);
+        alert("Failed to submit feedback. Please try again.");
+      });
+  };
+
   return (
     <div className="contact">
       <div
@@ -28,8 +68,13 @@ function Contact() {
             cols={40}
             id="feedbackArea"
             placeholder="Feel free to share your opinions..."
+            value={feedback}
+            onChange={handleFeedbackChange}
           ></textarea>
-          <button> Submit </button>
+          <button type="submit" onClick={handleFeedbackSubmit}>
+            {" "}
+            Submit{" "}
+          </button>
         </div>
       </div>
     </div>
