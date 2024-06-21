@@ -7,7 +7,13 @@ import "../styles/Contact.css";
 function Contact() {
   const [feedback, setFeedback] = useState("");
 
-  //handling chnage in the feedback option
+  //used to tell the user if the feedback was successfully submitted or not
+  const [confirmation, setConfirmation] = useState<string | null>(null);
+
+  //to endure the feedback box isn't empty
+  const [empty, setEmpty] = useState("");
+
+  //handling change in the feedback option
   const handleFeedbackChange = (event) => {
     console.log("handling feedback");
     setFeedback(event.target.value);
@@ -16,6 +22,11 @@ function Contact() {
   //submitting feedback to backend
   const handleFeedbackSubmit = (event) => {
     event.preventDefault();
+
+    if (!feedback.trim()) {
+      setEmpty("Please enter feedback!");
+      return;
+    }
     console.log("submission starting");
     console.log("sending data to server:", feedback);
 
@@ -36,12 +47,13 @@ function Contact() {
         console.log("Received response from server:", data);
         console.log("Data saved successfully:", data);
         console.log("no error. data sent and saved");
-        alert("feedback submitted successfully!");
+        setConfirmation("Thank you for your feedback!");
+        setEmpty("");
         setFeedback("");
       })
       .catch((error) => {
         console.error("Error saving data:", error.message);
-        alert("Failed to submit feedback. Please try again.");
+        setConfirmation("Failed to submit. Please try again");
       });
   };
 
@@ -71,10 +83,16 @@ function Contact() {
             value={feedback}
             onChange={handleFeedbackChange}
           ></textarea>
+          {empty && <p className="empty-message">{empty}</p>}
           <button type="submit" onClick={handleFeedbackSubmit}>
             {" "}
             Submit{" "}
           </button>
+        </div>
+        <div className="confirmation">
+          {confirmation && (
+            <p className="confirmation-message">{confirmation}</p>
+          )}
         </div>
       </div>
     </div>
