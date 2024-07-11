@@ -8,6 +8,7 @@
   background-position-y: top;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .headerContainer h1 {
@@ -16,9 +17,9 @@
   font-size: 90px;
   margin-bottom: 0;
   letter-spacing: 30px;
-  position: absolute;
-  top: 35%;
-  left: 17%;
+  position: relative;
+  top: 80%;
+  left: 10%;
 }
 
 .headerContainer h2 {
@@ -28,9 +29,9 @@
   letter-spacing: 2px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
-  position: absolute;
-  top: 48%;
-  left: 17%;
+  position: relative;
+  top: 80%;
+  left: 10%;
 }
 
 .headerContainer button {
@@ -46,9 +47,9 @@
   font-size: 1rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   position: relative;
- top:700%;
- left:17%;
- margin-right:1%;
+  top: 90%;
+  left: 10%;
+  margin-right: 1%;
 }
 
 .headerContainer button:hover {
