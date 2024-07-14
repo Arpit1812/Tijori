@@ -92,10 +92,12 @@
 
 const express = require('express');
 const { connectDB } = require('./db');
-const uploadRoute = require('./routes/documents');
+// const uploadRoute = require('./routes/documents');
 const authRoutes = require('./routes/auth');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const PdfSchema = require("./models/document")
+const multer = require('multer');
 
 const app = express();
 
@@ -111,7 +113,35 @@ connectDB();
 
 app.use(bodyParser.json());
 app.use('/api/auth', authRoutes);
-app.use('/api/documents', uploadRoute);
+// app.use('/api/documents', uploadRoute);
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, "./files")
+  },
+  filename: function(req, file, cb){
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  }
+});
+
+const upload = multer({storage: storage});
+
+app.post("/upload-files", upload.single("file"), async(req, res) =>{
+  console.log(req.file)
+  const title = req.body.title
+  const filename = req.file.filename;
+
+  try{
+    await PdfSchema.create({tile: title, pdf: filename});
+    res.send({status: "ok"});
+  } catch (error){
+    res.json({status: error})
+  }
+}) 
+
+app.get("/upload", async(req, res) =>{
+  res.send("success!")
+} )
 
 const PORT = 5000;
  app.listen(PORT, () => {
