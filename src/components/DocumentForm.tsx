@@ -9,7 +9,8 @@ function DocumentForm({ id, onDelete }) {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleUpload = () => {
+  const handleUpload = (event) => {
+    event.preventDefault(); // Prevent form submission
     setIsSaved(true);
     console.log(selectedFile);
   };
@@ -17,6 +18,17 @@ function DocumentForm({ id, onDelete }) {
   const handleDelete = () => {
     onDelete(id);
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const inputElement = document.querySelector('.docTitle');
+    const inputConst = inputElement.value;
+    console.log('User input saved in constant:', inputConst);
+    alert(User input: ${inputConst});
+    setIsSaved(true);
+  }
+
+
 
   return (
     <div className="uploadDocs">
@@ -31,6 +43,7 @@ function DocumentForm({ id, onDelete }) {
           action="/"
           method="POST"
           encType="multipart/form-data"
+          onSubmit={handleSubmit} // Handle form submission here
         >
           <label htmlFor="title"> TITLE </label>
           <input
@@ -43,14 +56,12 @@ function DocumentForm({ id, onDelete }) {
             }}
           />
 
-          <input type="file" onChange={handleFileChange} required />
-          <button onClick={handleUpload} className="submitDoc">
-            {" "}
-            Save{" "}
+          <input type="file" onChange={handleFileChange} />
+          <button type="submit" className="submitDoc"> 
+            Save
           </button>
           <button type="button" onClick={handleDelete} className="deleteDoc">
-            {" "}
-            Delete{" "}
+            Delete
           </button>
         </form>
       </div>
@@ -58,4 +69,4 @@ function DocumentForm({ id, onDelete }) {
   );
 }
 
-export default DocumentForm;
+export default DocumentForm;
