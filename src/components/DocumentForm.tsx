@@ -1,5 +1,5 @@
-// import React, { useState } from "react";
-// import "../styles/DocumentForm.css";
+import React, { useState } from "react";
+import "../styles/DocumentForm.css";
 
 // function DocumentForm({ id, onDelete }) {
 //   const [selectedFile, setSelectedFile] = useState(null);
@@ -84,19 +84,13 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ id, onDelete }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [title, setTitle] = useState('');
   const [isSaved, setIsSaved] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setSelectedFile(event.target.files[0]);
-    }
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handleUpload = () => {
+  const handleUpload = (event) => {
+    event.preventDefault(); // Prevent form submission
     setIsSaved(true);
     console.log(selectedFile);
   };
@@ -121,12 +115,13 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ id, onDelete }) => {
       <div
         className="doc"
         style={{
-          backgroundColor: isSaved ? 'rgb(129, 177, 169)' : '#333',
+          backgroundColor: isSaved ? "rgb(129, 177, 169)" : "#333",
         }}
       >
         <form
           id="uploadForm"
-          onSubmit={handleUpload}
+          action="/"
+          method="POST"
           encType="multipart/form-data"
           onSubmit={handleSubmit} // Handle form submission here
         >
@@ -136,26 +131,22 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ id, onDelete }) => {
             name="title"
             id="title"
             className="docTitle"
-            value={title}
-            onChange={handleTitleChange}
             style={{
-              backgroundColor: isSaved ? 'rgb(129, 177, 169)' : '#333',
+              backgroundColor: isSaved ? "rgb(129, 177, 169)" : "#333",
             }}
           />
 
-          <input type="file" onChange={handleFileChange} required />
-          <button onClick={handleUpload} className="submitDoc">
-            {" "}
-            Save{" "}
+          <input type="file" onChange={handleFileChange} />
+          <button type="submit" className="submitDoc"> 
+            Save
           </button>
           <button type="button" onClick={handleDelete} className="deleteDoc">
             Delete
           </button>
-          {error && <p className="error">{error}</p>}
         </form>
       </div>
     </div>
   );
-};
+}
 
 export default DocumentForm;
