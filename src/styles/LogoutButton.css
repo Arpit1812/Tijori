@@ -1,0 +1,9 @@
+.logoutButton {
+  background-color: rgb(129, 177, 169);
+  color: white;
+  border: none;
+  width: 180px;
+  cursor: pointer;
+  height: 40px;
+  border-radius: 5px;
+}
