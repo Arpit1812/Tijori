@@ -80,22 +80,22 @@
 // };
 
 
-// // src/api/uploadDocument.js -- CODE SNIPPET 4
-// import axios from 'axios';
+// src/api/uploadDocument.js -- CODE SNIPPET 4
+import axios from 'axios';
 
-// const API_URL = 'http://localhost:5000';
+const API_URL = 'http://localhost:5000';
 
-// export const uploadDocument = async (formData) => {
-//   try {
-//     const token = localStorage.getItem('token');
-//     const response = await axios.post(`${API_URL}/upload-files`, formData, {
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+export const uploadDocument = async (formData) => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.post(`${API_URL}/api/documents/upload`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

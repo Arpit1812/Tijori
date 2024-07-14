@@ -178,20 +178,19 @@ const DocumentFormPage: React.FC<{ id: number; onDelete: (id: number) => void }>
       const formData = new FormData();
       formData.append('title', title);
       formData.append('file', selectedFile);
-      console.log(title, selectedFile)
 
       try {
-        const response = await axios.post('http://localhost:5000/upload-files', formData, {
+        const response = await axios.post('http://localhost:5000/documents/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-        });console.log(response)
+        });
         alert('Document uploaded successfully!');
       } catch (error) {
         console.error('Upload failed:', error);
         alert('Failed to upload document.');
       }
-    } 
+    }
   };
 
   return (
