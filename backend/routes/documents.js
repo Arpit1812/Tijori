@@ -208,43 +208,70 @@
 
 // module.exports = router;
 
+// const express = require('express');
+// const multer = require('multer');
+// const upload = require('./files')
+// const { getGFS } = require('../db');
+
+// const router = express.Router();
+
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage });
+
+// router.post('/upload', upload.single('file'), async (req, res) => {
+//   const gfs = getGFS();
+//   if (!gfs) {
+//     return res.status(500).send('GridFSBucket not initialized');
+//   }
+
+//   const { title } = req.body;
+//   const { file } = req;
+
+//   if (!title || !file) {
+//     return res.status(400).send('Title and file are required');
+//   }
+
+//   const stream = gfs.openUploadStream(title, {
+//     contentType: file.mimetype,
+//   });
+
+//   stream.write(file.buffer);
+//   stream.end();
+
+//   stream.on('finish', () => {
+//     res.status(200).send('File uploaded successfully');
+//   });
+
+//   stream.on('error', (err) => {
+//     console.error(err);
+//     res.status(500).send('Error uploading file');
+//   });
+// });
+
+// module.exports = router;
+
+
 const express = require('express');
 const multer = require('multer');
 const { getGFS } = require('../db');
 
 const router = express.Router();
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
-
-router.post('/upload', upload.single('file'), async (req, res) => {
-  const gfs = getGFS();
-  if (!gfs) {
-    return res.status(500).send('GridFSBucket not initialized');
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, "./files")
+  },
+  filename: function(req, file, cb){
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
   }
-
-  const { title } = req.body;
-  const { file } = req;
-
-  if (!title || !file) {
-    return res.status(400).send('Title and file are required');
-  }
-
-  const stream = gfs.openUploadStream(title, {
-    contentType: file.mimetype,
-  });
-
-  stream.write(file.buffer);
-  stream.end();
-
-  stream.on('finish', () => {
-    res.status(200).send('File uploaded successfully');
-  });
-
-  stream.on('error', (err) => {
-    console.error(err);
-    res.status(500).send('Error uploading file');
-  });
 });
+
+const upload = multer({storage: storage});
+
+// router.get("/upload-files", upload.single("file"), )
+router.get("/upload", async(req, res) =>{
+  res.send("success!")
+} )
 
 module.exports = router;
