@@ -5,7 +5,6 @@ import "../styles/Navbar.css";
 import ReorderIcon from "@material-ui/icons/Reorder";
 
 function Navbar() {
-
   const [openLinks, setOpenLinks] = useState(false);
   const toggleNavbar = () => {
     setOpenLinks(!openLinks);
@@ -20,8 +19,9 @@ function Navbar() {
           <Link to="/documentManager"> Document Manager </Link>
           <Link to="/passwordManager"> Password Manager </Link>
           <Link to="/contact"> Contact Us </Link>
+          <Link to="/dashboard"> Profile </Link> {/*route to dashboard*/}
           <button onClick={toggleNavbar}>
-          <ReorderIcon />
+            <ReorderIcon />
           </button>
         </div>
       </div>
@@ -30,6 +30,7 @@ function Navbar() {
         <Link to="/documentManager"> Document Manager </Link>
         <Link to="/passwordManager"> Password Manager </Link>
         <Link to="/contact"> Contact Us </Link>
+        <Link to="/dashboard"> Profile </Link> {/*route to dashboard*/}
         <button onClick={toggleNavbar}>
           <ReorderIcon />
         </button>
