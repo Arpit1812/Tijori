@@ -103,7 +103,6 @@
 
 // export default LogInForm;
 
-
 // src/pages/LogInForm.tsx
 // import React, { useState } from 'react';
 // import { Link, useNavigate } from 'react-router-dom';
@@ -190,7 +189,6 @@
 // };
 
 // export default LogInForm;
-
 
 // // src/pages/LogInForm.tsx
 // import React, { useState } from 'react';
@@ -279,13 +277,13 @@
 
 // export default LogInForm;
 
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../styles/LogInForm.css';
-import { useAuth } from '../AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/LogInForm.css";
+import { useAuth } from "../AuthContext";
 
 const LogInForm: React.FC = () => {
-  const [loginData, setLoginData] = useState({ username: '', password: '' });
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -304,9 +302,9 @@ const LogInForm: React.FC = () => {
     try {
       await login(loginData.username, loginData.password);
       setError(null);
-      navigate('/documentManager');
+      navigate("/documentManager");
     } catch (error: any) {
-      setError('Invalid username or password. Please try again.');
+      setError("Invalid username or password. Please try again.");
     }
   };
 
