@@ -1,5 +1,5 @@
-// import React, { useState } from "react";
-// import "../styles/DocumentForm.css";
+import React, { useState } from "react";
+import "../styles/DocumentForm.css";
 
 // function DocumentForm({ id, onDelete }) {
 //   const [selectedFile, setSelectedFile] = useState(null);
@@ -84,56 +84,46 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ id, onDelete }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [title, setTitle] = useState('');
   const [isSaved, setIsSaved] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setSelectedFile(event.target.files[0]);
-    }
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handleUpload = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!selectedFile || !title) {
-      setError('Please provide a title and select a file.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('file', selectedFile);
-
-    try {
-      await uploadDocument(formData);
-      setIsSaved(true);
-      setError(null);
-      alert('Document uploaded successfully!');
-    } catch (error) {
-      setError('Failed to upload document. Please try again.');
-    }
+  const handleUpload = (event) => {
+    event.preventDefault(); // Prevent form submission
+    setIsSaved(true);
+    console.log(selectedFile);
   };
 
   const handleDelete = () => {
     onDelete(id);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const inputElement = document.querySelector('.docTitle');
+    const inputConst = inputElement.value;
+    console.log('User input saved in constant:', inputConst);
+    alert(User input: ${inputConst});
+    setIsSaved(true);
+  }
+
+
+
   return (
     <div className="uploadDocs">
       <div
         className="doc"
         style={{
-          backgroundColor: isSaved ? 'rgb(129, 177, 169)' : '#333',
+          backgroundColor: isSaved ? "rgb(129, 177, 169)" : "#333",
         }}
       >
         <form
           id="uploadForm"
-          onSubmit={handleUpload}
+          action="/"
+          method="POST"
           encType="multipart/form-data"
+          onSubmit={handleSubmit} // Handle form submission here
         >
           <label htmlFor="title"> TITLE </label>
           <input
@@ -141,25 +131,22 @@ const DocumentForm: React.FC<DocumentFormProps> = ({ id, onDelete }) => {
             name="title"
             id="title"
             className="docTitle"
-            value={title}
-            onChange={handleTitleChange}
             style={{
-              backgroundColor: isSaved ? 'rgb(129, 177, 169)' : '#333',
+              backgroundColor: isSaved ? "rgb(129, 177, 169)" : "#333",
             }}
           />
 
           <input type="file" onChange={handleFileChange} />
-          <button type="submit" className="submitDoc">
+          <button type="submit" className="submitDoc"> 
             Save
           </button>
           <button type="button" onClick={handleDelete} className="deleteDoc">
             Delete
           </button>
-          {error && <p className="error">{error}</p>}
         </form>
       </div>
     </div>
   );
-};
+}
 
-export default DocumentForm;
+export default DocumentForm;

@@ -1,3 +1,13 @@
+# TIjori: Your digital locker
+Tijori is a website which provides users the facility to store passwords and documents in a single place for ease of access. It's like a one stop solution for all your information storage needs.
+
+# Frontend
+HTML/CSS has been used to create the website and design the website. We took the help of React.js framework to incorporate their component feature which helped avoid repeatition. 
+Inside React, the code is a mix of HTML and TypeScript.
+This React application is working in Vite.
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

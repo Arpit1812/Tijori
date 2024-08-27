@@ -60,12 +60,16 @@ function PasswordForm({ id, onDelete }) {
   };
 
   const handleDelete = () => {
+    console.log("delete button pressed");
     onDelete(id);
   };
 
-  const handleEdit = () => {
-    setIsEdit(true);
+  const handleEdit = (event) => {
+    event.preventDefault();
+    console.log("edit button pressed");
     setIsSaved(false);
+    setIsEdit(true);
+   
   };
 
   return (
