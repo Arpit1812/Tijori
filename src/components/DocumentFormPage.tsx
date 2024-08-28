@@ -156,60 +156,101 @@
 // };
 
 // export default DocumentFormPage;
-
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const DocumentFormPage: React.FC<{ id: number; onDelete: (id: number) => void }> = ({ id, onDelete }) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+const UploadDocument: React.FC = () => {
+  const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState('');
+  const [message, setMessage] = useState<string | null>(null);
+  const [documents, setDocuments] = useState<any[]>([]); // State to hold uploaded documents
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setSelectedFile(event.target.files[0]);
+  // Handle file input change
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
     }
   };
 
-  const handleUpload = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  // Handle document upload
+  const handleUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!file || !title) {
+      setMessage('Please provide both a file and a title.');
+      return;
+    }
 
-    if (selectedFile && title) {
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('file', selectedFile);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('title', title);
 
-      try {
-        const response = await axios.post('http://localhost:5000/documents/upload', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        alert('Document uploaded successfully!');
-      } catch (error) {
-        console.error('Upload failed:', error);
-        alert('Failed to upload document.');
-      }
+    try {
+      // Upload the document without the authorization header
+      const response = await axios.post('http://localhost:5000/api/documents/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      
+      setMessage('File uploaded successfully');
+      // Optionally, fetch documents again to refresh the list after upload
+      fetchDocuments();
+    } catch (error) {
+      console.error('Error uploading document:', error);
+      setMessage('Failed to upload file. ' + (error.response?.data?.message || error.message));
     }
   };
+
+  // Fetch documents function
+  const fetchDocuments = async () => {
+    try {
+      // Fetch user's documents without the authorization header
+      const response = await axios.get('http://localhost:5000/api/documents/my-documents');
+      setDocuments(response.data);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+      setMessage('Failed to fetch documents. ' + (error.response?.data?.message || error.message));
+    }
+  };
+
+  // Fetch documents when component mounts
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
 
   return (
-    <div className="uploadDocs">
+    <div>
+      <h2>Upload Document</h2>
       <form onSubmit={handleUpload}>
-        <label htmlFor="title">Title</label>
-        <input
-          type="text"
-          name="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <input type="file" onChange={handleFileChange} required />
-        <button type="submit">Save</button>
-        <button type="button" onClick={() => onDelete(id)}>Delete</button>
+        <div>
+          <label>Title:</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>File:</label>
+          <input type="file" onChange={handleFileChange} required />
+        </div>
+        <button type="submit">Upload</button>
+        {message && <p>{message}</p>}
       </form>
+
+      <h3>Your Documents:</h3>
+      <ul>
+        {documents.map((doc) => (
+          <li key={doc.filename}>
+            <a href={`http://localhost:5000${doc.path}`} target="_blank" rel="noopener noreferrer">
+              {doc.filename}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default DocumentFormPage;
+export default UploadDocument;
