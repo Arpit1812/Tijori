@@ -88,32 +88,30 @@
 // const PORT = 5000;
 // app.listen(PORT, () => {
 //   console.log(`Server running on port ${PORT}`);
-//});
+//});require('dotenv').config();
 
 const express = require('express');
+require('dotenv').config();
 const { connectDB } = require('./db');
 const uploadRoute = require('./routes/documents');
 const authRoutes = require('./routes/auth');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const { authenticateToken } = require('./middleware');
 
 const app = express();
 
-// Configure CORS
 const corsOptions = {
-  origin: 'http://localhost:5173', // Allow requests from this origin
-  optionsSuccessStatus: 200,
+  origin: 'http://localhost:5173', // Your frontend URL
 };
 
 app.use(cors(corsOptions));
-
 connectDB();
+app.use(express.json()); // Use express.json() instead of body-parser
 
-app.use(bodyParser.json());
 app.use('/api/auth', authRoutes);
-app.use('/api/documents', uploadRoute);
+app.use('/api/documents', authenticateToken, uploadRoute);
 
 const PORT = 5000;
- app.listen(PORT, () => {
-   console.log(`Server running on port ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

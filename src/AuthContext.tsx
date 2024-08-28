@@ -133,9 +133,9 @@
 
 // src/AuthContext.tsx CODE SNIPPET 3
 
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { login as loginUser } from './api/login';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
   user: string | null;
@@ -147,6 +147,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<string | null>(localStorage.getItem('token'));
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -159,10 +160,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (username: string, password: string) => {
     const token = await loginUser(username, password);
     setUser(token);
+    navigate('/dashboard');
   };
 
   const logout = () => {
     setUser(null);
+    navigate('/login');
   };
 
   return (

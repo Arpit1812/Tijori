@@ -9,8 +9,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
+=======
   "description": "ridhima",
+>>>>>>> 0712407aa07e2b8177731e734f832c1213776c48
   "dependencies": {
+    "axios": "^1.7.5",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -18,8 +23,9 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.0",
-    "mongoose": "^8.4.3",
+    "mongoose": "^8.5.4",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.4"
-  }
+  },
+  "description": ""
 }

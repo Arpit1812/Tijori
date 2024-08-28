@@ -206,23 +206,186 @@
 //   });
 // });
 
+// // module.exports = router;
+// require('dotenv').config();
+// const express = require('express');
+// const multer = require('multer');
+// const path = require('path');
+// const fs = require('fs');
+
+// const router = express.Router();
+
+// // Directory to store files
+// const UPLOADS_DIR = path.join(__dirname, '../uploads');
+// if (!fs.existsSync(UPLOADS_DIR)) {
+//   fs.mkdirSync(UPLOADS_DIR); // Create the directory if it doesn't exist
+// }
+
+// // Configure multer for local storage
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     const userUploadsDir = path.join(UPLOADS_DIR, req.user.id.toString());
+//     if (!fs.existsSync(userUploadsDir)) {
+//       fs.mkdirSync(userUploadsDir); // Create user-specific directory if it doesn't exist
+//     }
+//     cb(null, userUploadsDir);
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, `${Date.now()}-${file.originalname}`);
+//   },
+// });
+
+// const upload = multer({ storage });
+
+// // Middleware to authenticate and get user from JWT token
+// const authenticateUser = (req, res, next) => {
+//   const authHeader = req.headers['authorization'];
+
+//   if (!authHeader) {
+//     return res.status(403).json({ message: 'Authorization token is missing' });
+//   }
+
+//   const token = authHeader.split(' ')[1]; // Extract the token after "Bearer"
+//   if (!token) {
+//     return res.status(403).json({ message: 'Invalid token format' });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Replace with your secret
+//     req.user = decoded; // Store user info in request object
+//     next();
+//   } catch (err) {
+//     return res.status(403).json({ message: 'Token is invalid or expired' });
+//   }
+// };
+
+// // Upload a document (POST)
+// router.post('/upload', authenticateUser, upload.single('file'), (req, res) => {
+//   const { title } = req.body;
+//   const { file } = req;
+
+//   if (!title || !file) {
+//     return res.status(400).send('Title and file are required');
+//   }
+
+//   res.status(200).send('File uploaded successfully');
+// });
+
+// // Get documents uploaded by the current user (GET)
+// router.get('/my-documents', authenticateUser, (req, res) => {
+//   const userId = req.user.id;
+//   const userUploadsDir = path.join(UPLOADS_DIR, userId.toString());
+
+//   if (!fs.existsSync(userUploadsDir)) {
+//     return res.status(404).send('No documents found');
+//   }
+
+//   fs.readdir(userUploadsDir, (err, files) => {
+//     if (err) return res.status(500).send('Error reading files');
+
+//     const fileList = files.map((file) => ({
+//       filename: file,
+//       path: `/uploads/${userId}/${file}`, // Adjust this depending on your static files setup
+//     }));
+
+//     res.json(fileList);
+//   });
+// });
+
 // module.exports = router;
 
+// const express = require('express');
+// const multer = require('multer');
+// const path = require('path');
+// const fs = require('fs');
+// const { authenticateToken } = require('../middleware'); // Import the middleware
+
+// const router = express.Router();
+
+// // Directory to store files
+// const UPLOADS_DIR = path.join(__dirname, '../uploads');
+// if (!fs.existsSync(UPLOADS_DIR)) {
+//   fs.mkdirSync(UPLOADS_DIR); // Create the directory if it doesn't exist
+// }
+
+// // Configure multer for local storage
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     const userUploadsDir = path.join(UPLOADS_DIR, req.user.id.toString());
+//     if (!fs.existsSync(userUploadsDir)) {
+//       fs.mkdirSync(userUploadsDir); // Create user-specific directory if it doesn't exist
+//     }
+//     cb(null, userUploadsDir);
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, `${Date.now()}-${file.originalname}`);
+//   },
+// });
+
+// const upload = multer({ storage });
+
+// // Upload a document (POST)
+// router.post('/upload', authenticateToken, upload.single('file'), (req, res) => {
+//   const { title } = req.body;
+//   const { file } = req;
+
+//   if (!title || !file) {
+//     return res.status(400).send('Title and file are required');
+//   }
+
+//   res.status(200).send('File uploaded successfully');
+// });
+
+// // Get documents uploaded by the current user (GET)
+// router.get('/my-documents', authenticateToken, (req, res) => {
+//   const userId = req.user.id;
+//   const userUploadsDir = path.join(UPLOADS_DIR, userId.toString());
+
+//   if (!fs.existsSync(userUploadsDir)) {
+//     return res.status(404).send('No documents found');
+//   }
+
+//   fs.readdir(userUploadsDir, (err, files) => {
+//     if (err) return res.status(500).send('Error reading files');
+
+//     const fileList = files.map((file) => ({
+//       filename: file,
+//       path: `/uploads/${userId}/${file}`, // Adjust this depending on your static files setup
+//     }));
+
+//     res.json(fileList);
+//   });
+// });
+
+// module.exports = router;
 const express = require('express');
 const multer = require('multer');
-const { getGFS } = require('../db');
+const path = require('path');
+const fs = require('fs');
 
 const router = express.Router();
 
-const storage = multer.memoryStorage();
+// Directory to store files
+const UPLOADS_DIR = path.join(__dirname, '../uploads');
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR); // Create the directory if it doesn't exist
+}
+
+// Configure multer for local storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Use a default directory since no user-specific directories are needed
+    cb(null, UPLOADS_DIR);
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
 const upload = multer({ storage });
 
-router.post('/upload', upload.single('file'), async (req, res) => {
-  const gfs = getGFS();
-  if (!gfs) {
-    return res.status(500).send('GridFSBucket not initialized');
-  }
-
+// Upload a document (POST)
+router.post('/upload', upload.single('file'), (req, res) => {
   const { title } = req.body;
   const { file } = req;
 
@@ -230,20 +393,25 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     return res.status(400).send('Title and file are required');
   }
 
-  const stream = gfs.openUploadStream(title, {
-    contentType: file.mimetype,
-  });
+  res.status(200).send('File uploaded successfully');
+});
 
-  stream.write(file.buffer);
-  stream.end();
+// Get documents uploaded by the current user (GET)
+router.get('/my-documents', (req, res) => {
+  // Since authentication is removed, no user-specific filtering is applied
+  if (!fs.existsSync(UPLOADS_DIR)) {
+    return res.status(404).send('No documents found');
+  }
 
-  stream.on('finish', () => {
-    res.status(200).send('File uploaded successfully');
-  });
+  fs.readdir(UPLOADS_DIR, (err, files) => {
+    if (err) return res.status(500).send('Error reading files');
 
-  stream.on('error', (err) => {
-    console.error(err);
-    res.status(500).send('Error uploading file');
+    const fileList = files.map((file) => ({
+      filename: file,
+      path: `/uploads/${file}`, // Adjust this depending on your static files setup
+    }));
+
+    res.json(fileList);
   });
 });
 

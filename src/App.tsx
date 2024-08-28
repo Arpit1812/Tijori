@@ -113,8 +113,7 @@
 
 // export default App;
 
-// src/App.tsx
-import React from 'react';
+// src/App.tsximport React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -122,12 +121,14 @@ import Home from './pages/Home';
 import Footer from './components/Footer';
 import Contact from './pages/Contact';
 import SignUpForm from './pages/SignUpForm';
-import PasswordManager from './pages/PasswordManager';
 import DocumentManager from './pages/DocumentManager';
 import DocumentForm from './components/DocumentFormPage';
 import LogInForm from './pages/LogInForm';
+import Dashboard from './pages/Dashboard'; // New Dashboard component to check login status
+import UploadDocument from './pages/UploadDocument'; // New component for document upload
 import { AuthProvider, useAuth } from './AuthContext';
 
+// PrivateRoute to protect routes from unauthorized access
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const { user } = useAuth();
   return user ? children : <Navigate to="/login" />;
@@ -147,12 +148,20 @@ function App() {
             />
             <Route path="/contact" element={<Contact />} />
             <Route path="/signup" element={<SignUpForm />} />
-            <Route path="/passwordManager" element={<PasswordManager />} />
+            <Route path="/login" element={<LogInForm />} />
             <Route
               path="/documentForm"
               element={<PrivateRoute><DocumentForm /></PrivateRoute>}
             />
-            <Route path="/login" element={<LogInForm />} />
+            {/* New Routes */}
+            <Route
+              path="/dashboard"
+              element={<PrivateRoute><Dashboard /></PrivateRoute>}
+            />
+            <Route
+              path="/upload"
+              element={<PrivateRoute><UploadDocument /></PrivateRoute>}
+            />
           </Routes>
           <Footer />
         </AuthProvider>

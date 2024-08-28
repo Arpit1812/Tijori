@@ -38,24 +38,27 @@
 //   });
 // };
 
-// module.exports = authMiddleware;
+// module.exports = authMiddleware;const jwt = require('jsonwebtoken');
 
-const jwt = require('jsonwebtoken');
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
 
-const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
+  if (!authHeader) {
+    return res.status(403).json({ message: 'Authorization token is missing' });
   }
 
-  jwt.verify(token, 'secretkey', (err, user) => {
-    if (err) {
-      return res.status(403).json({ message: 'Invalid token' });
-    }
-    req.user = user;
+  const token = authHeader.split(' ')[1]; // Extract the token after "Bearer"
+  if (!token) {
+    return res.status(403).json({ message: 'Invalid token format' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Replace with your secret
+    req.user = decoded; // Store user info in request object
     next();
-  });
+  } catch (err) {
+    return res.status(403).json({ message: 'Token is invalid or expired' });
+  }
 };
 
-module.exports = authMiddleware;
+module.exports = { authenticateToken };
