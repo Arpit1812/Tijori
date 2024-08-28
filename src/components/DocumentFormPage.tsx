@@ -181,11 +181,12 @@ const UploadDocument: React.FC = () => {
     }
 
     const formData = new FormData();
-    formData.append('file', file);
     formData.append('title', title);
-
+    formData.append('file', file);
+    
+    console.log(title, file)
     try {
-      // Upload the document without the authorization header
+      // Upload the document without authentication
       const response = await axios.post('http://localhost:5000/api/documents/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -193,8 +194,7 @@ const UploadDocument: React.FC = () => {
       });
       
       setMessage('File uploaded successfully');
-      // Optionally, fetch documents again to refresh the list after upload
-      fetchDocuments();
+      fetchDocuments(); // Refresh document list after upload
     } catch (error) {
       console.error('Error uploading document:', error);
       setMessage('Failed to upload file. ' + (error.response?.data?.message || error.message));
@@ -204,7 +204,7 @@ const UploadDocument: React.FC = () => {
   // Fetch documents function
   const fetchDocuments = async () => {
     try {
-      // Fetch user's documents without the authorization header
+      // Fetch user's documents without authentication
       const response = await axios.get('http://localhost:5000/api/documents/my-documents');
       setDocuments(response.data);
     } catch (error) {
@@ -239,16 +239,6 @@ const UploadDocument: React.FC = () => {
         {message && <p>{message}</p>}
       </form>
 
-      <h3>Your Documents:</h3>
-      <ul>
-        {documents.map((doc) => (
-          <li key={doc.filename}>
-            <a href={`http://localhost:5000${doc.path}`} target="_blank" rel="noopener noreferrer">
-              {doc.filename}
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
