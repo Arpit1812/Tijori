@@ -16,7 +16,7 @@
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
-    "axios": "^1.7.2",
+    "axios": "^1.7.4",
     "bootstrap": "^5.3.3",
     "nodemon": "^3.1.4",
     "react": "^18.2.0",
@@ -50,5 +50,9 @@
     "minimatch": "9.0.4",
     "glob-parent": "5.1.2",
     "brace-expansion": "2.0.1"
-  }
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
 }

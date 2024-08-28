@@ -9,6 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
+=======
+  "description": "ridhima",
+>>>>>>> 0712407aa07e2b8177731e734f832c1213776c48
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
