@@ -9,10 +9,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-<<<<<<< HEAD
-=======
-  "description": "ridhima",
->>>>>>> 0712407aa07e2b8177731e734f832c1213776c48
   "dependencies": {
     "axios": "^1.7.5",
     "bcrypt": "^5.1.1",

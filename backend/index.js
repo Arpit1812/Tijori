@@ -109,7 +109,7 @@ connectDB();
 app.use(express.json()); // Use express.json() instead of body-parser
 
 app.use('/api/auth', authRoutes);
-app.use('/api/documents', authenticateToken, uploadRoute);
+app.use('/api/documents', uploadRoute);
 
 const PORT = 5000;
 app.listen(PORT, () => {

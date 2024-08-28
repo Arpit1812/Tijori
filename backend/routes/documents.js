@@ -374,8 +374,7 @@ if (!fs.existsSync(UPLOADS_DIR)) {
 // Configure multer for local storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Use a default directory since no user-specific directories are needed
-    cb(null, UPLOADS_DIR);
+    cb(null, UPLOADS_DIR); // Use the default upload directory
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -396,9 +395,8 @@ router.post('/upload', upload.single('file'), (req, res) => {
   res.status(200).send('File uploaded successfully');
 });
 
-// Get documents uploaded by the current user (GET)
+// Get documents (GET)
 router.get('/my-documents', (req, res) => {
-  // Since authentication is removed, no user-specific filtering is applied
   if (!fs.existsSync(UPLOADS_DIR)) {
     return res.status(404).send('No documents found');
   }
